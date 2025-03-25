@@ -1,3 +1,5 @@
 streamlit
 pandas
 matplotlib
+firebase-admin
+python-dotenv
