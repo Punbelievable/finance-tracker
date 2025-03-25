@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime, time
-import time;
+from time import sleep
+
 
 from oauth import google_login
 from firebase_config import initialize_firebase
@@ -34,7 +35,7 @@ with st.sidebar:
 
         if auth_result and 'token' in auth_result:
             # Ensure timing sync
-            time.sleep(1)
+            sleep(1)
             
             user_info = authenticate_user(auth_result['token']['id_token'])
 
@@ -115,6 +116,9 @@ if st.session_state.user['email']:
     with st.form("transaction_form"):
         st.subheader("Add New Transaction")
         date = st.date_input("Date", datetime.today())
+        
+        time = st.time_input("Select Time", value=time(12, 0), step=15 * 60)
+        
         desc = st.text_input("Description")
         # step: increment value
         amount = st.number_input("Amount ($)", min_value=0.01, step=0.01)
@@ -123,16 +127,17 @@ if st.session_state.user['email']:
 
         if st.form_submit_button("Add Transaction"):
             try:
+                transaction_datetime = datetime.combine(date, time)
+                
                 # Add transaction to Firestore
                 # Create Firestore document
                 transaction_data = {
-                    "Date": datetime.combine(date, time.min),
+                    "Date": transaction_datetime,
                     "Description": desc,
                     "Amount": float(amount),
                     "Category": category
                 }
                 
-                # Save to user-specific collection
                 db.collection("users").document(st.session_state.user['email']).collection("transactions").add(transaction_data)
                 
                 
