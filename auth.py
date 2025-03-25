@@ -16,8 +16,7 @@ def authenticate_user(token):
         return {
             'info': idinfo,
             'email': idinfo['email'],
-            'name': idinfo.get('name', 'User'),
-            'picture': idinfo.get('picture', '')
+            'name': idinfo.get('name', 'User')
         }
     
     except ValueError as e:

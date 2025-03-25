@@ -10,6 +10,7 @@ from auth import authenticate_user
 
 db = initialize_firebase()
 
+
 # Setup
 # page_title: title of the page shown in the browser tab
 # layout: centered, wide, or sidebar
@@ -23,7 +24,6 @@ if 'user' not in st.session_state:
     st.session_state.user = {
         'email': None,
         'name': None,
-        'picture': None
     }
 
 with st.sidebar:
@@ -42,20 +42,40 @@ with st.sidebar:
                 st.session_state.user = user_info
                 st.rerun()
     else:
-        col1, col2 = st.columns([1, 3])
-
-        with col1:
-            if st.session_state.user['picture']:
-                st.image(st.session_state.user['picture'], width=50)
-        with col2:
-            st.markdown(f"""
-                **Welcome {st.session_state.user['name']}!**  
-                {st.session_state.user['email']}
-            """)
+            custom_css = """
+            <style>
+                .welcome-container {
+                    background-color: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+                .welcome-header {
+                    color: #4CAF50;
+                    font-size: 22px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                .welcome-email {
+                    color: #666;
+                    font-size: 16px;
+                }
+            </style>
+            """
+            st.markdown(custom_css, unsafe_allow_html=True)
             
-        if st.button("Logout"):
-            st.session_state.clear()
-            st.rerun()
+            welcome_html = f"""
+            <div class="welcome-container">
+                <div class="welcome-header">{st.session_state.user['name']}</div>
+                <div class="welcome-email">{st.session_state.user['email']}</div>
+            </div>
+            """
+            st.markdown(welcome_html, unsafe_allow_html=True)
+            
+            if st.button("Logout"):
+                st.session_state.clear()
+                st.rerun()
 
 
 # Only show app if logged in

@@ -20,8 +20,8 @@ def google_login():
             authorize_endpoint="https://accounts.google.com/o/oauth2/auth",
             token_endpoint="https://oauth2.googleapis.com/token",
         )
-        
-        
+
+
         result = oauth.authorize_button(
             name="Continue with Google",
             redirect_uri=REDIRECT_URI,
@@ -31,7 +31,9 @@ def google_login():
             "prompt": "select_account",
             "nonce": generate_state(),
             },
+            icon="https://img.icons8.com/fluency/240/google-logo.png"
         )
+
 
         return result
     except KeyError as e:
