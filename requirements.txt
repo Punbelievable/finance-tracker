@@ -3,3 +3,4 @@ pandas
 matplotlib
 firebase-admin
 google-auth
+streamlit_oauth
