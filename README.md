@@ -94,10 +94,10 @@ client_x509_cert_url = "your-client-x509-cert-url"
 ---
 ## Technologies Used
 
-Streamlit: For the interactive web interface.
-Pandas: For data manipulation and analysis.
-Matplotlib: For creating pie charts and line graphs.
-Firebase: For Firestore database and authentication (via Google).
+- Streamlit: For the interactive web interface.
+- Pandas: For data manipulation and analysis.
+- Matplotlib: For creating pie charts and line graphs.
+- Firebase: For Firestore database and authentication (via Google).
 
 
 ---
